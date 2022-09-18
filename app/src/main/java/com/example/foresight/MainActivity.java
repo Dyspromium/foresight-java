@@ -4,16 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.foresight.detector.ShakeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Check connexion
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             setContentView(R.layout.activity_main);
@@ -34,11 +41,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             startActivity(switchActivityIntent);
         }
 
+        //Sensor shaking
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> goToSceanceActivity());
+
+        //Load daily session
+
+
     }
 
     private void goToAuthActivity() {
