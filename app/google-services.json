@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "628401144604",
+    "firebase_url": "https://foresight-3fbbc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "foresight-3fbbc",
+    "storage_bucket": "foresight-3fbbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628401144604:android:4887f6fb90293c59a870d9",
+        "android_client_info": {
+          "package_name": "com.example.foresight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628401144604-mdr864a52qtf657h17u03b0g272hcnfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6UCNGEImaDiQ_8TZOf6-JvWYhREDv4Ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628401144604-mdr864a52qtf657h17u03b0g272hcnfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
