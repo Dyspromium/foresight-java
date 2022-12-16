@@ -10,4 +10,8 @@
     <string name="programme_de_la_sceance">Programme de la sceance</string>
     <string name="foresight">Foresight</string>
     <string name="programme_du_jour">Programme du jour</string>
+    <string name="mes_sc_ances">Mes scéances</string>
+    <string name="home">Home</string>
+    <string name="string_home" />
+    <string name="cr_er_une_sc_ance">Créer une scéance</string>
 </resources>

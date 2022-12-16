@@ -3,6 +3,8 @@
     <color name="brown_600">#FFba5a31</color>
     <color name="brown_200">#FFe59f71</color>
     <color name="gray">#FFcccccc</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF222222</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primaryColor">#FF0984e3</color>
+    <color name="secondaryColor">#FF6c5ce7</color>
 </resources>

@@ -1,24 +1,22 @@
 package com.example.foresight;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.foresight.detector.ShakeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> goToSceanceActivity());
 
-        //Load daily session
+        //Initialization Notifications
+        this.notificationManagerCompat = NotificationManagerCompat.from(this);
 
 
     }
@@ -91,5 +91,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public void sendNotif(View view) {
+        String title = "Test Notification";
+        String message = "Bonjour je suis PICLOS";
+
+        Notification notification = new NotificationCompat.Builder(this, NotificationApp.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.border)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        int notificationId = 1;
+        this.notificationManagerCompat.notify(notificationId, notification);
     }
 }
