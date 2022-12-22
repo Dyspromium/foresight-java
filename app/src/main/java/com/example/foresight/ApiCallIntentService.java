@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class ApiCallIntentService extends IntentService {
 
-    private static String apiUrl= "https://ypmlcecnxikzxlrblkgr.supabase.co/";
+    private static final String apiUrl= "https://ypmlcecnxikzxlrblkgr.supabase.co/";
 
     @Override
     public void onCreate() {
@@ -27,12 +27,14 @@ public class ApiCallIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        //Get the URL from the intent
+        //Recuperation des données necessaire a l'envoie de la requete HTTP
         String endPoint = intent.getStringExtra("apiEndpoint");
         String requestType = intent.getStringExtra("requestType");
         String params = intent.getStringExtra("params");
 
+        //Si erreur dans ce code -> impossible de contacter la base de donnée -> error 500
         try {
+
             URL url = new URL(apiUrl+endPoint);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -42,31 +44,58 @@ public class ApiCallIntentService extends IntentService {
 
             if (requestType.equals("POST")) {
                 conn.setDoOutput(true);
-
-                // Set Request Body
+                //Ajout des parametres à la requete
                 try(OutputStream os = conn.getOutputStream()) {
                     byte[] input = params.getBytes("utf-8");
                     os.write(input, 0, input.length);
                 }
             }
 
-            // Read the response
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
+            try{
+                //Lecture de la reponse
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream()));
+                String inputLine;
 
-            Intent broadcastIntent = new Intent();
-            broadcastIntent.setAction("com.example.ACTION_API_RESPONSE");
-            broadcastIntent.putExtra("response", response.toString());
-            sendBroadcast(broadcastIntent);
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                //Envoie d'un signal contenant la reponse
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setAction("ACTION_API_RESPONSE");
+                broadcastIntent.putExtra("response", response.toString());
+                broadcastIntent.putExtra("code", "200");
+                sendBroadcast(broadcastIntent);
+
+            }catch(Exception e){
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(conn.getErrorStream()));
+                String inputLine;
+
+                StringBuffer error = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    error.append(inputLine);
+                }
+                in.close();
+
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setAction("ACTION_API_RESPONSE");
+                broadcastIntent.putExtra("response", error.toString());
+                broadcastIntent.putExtra("code", "400");
+                sendBroadcast(broadcastIntent);
+            }
         }
+
         catch (Exception e) {
-            Log.e("IntentService", e.getMessage());
+            //Envoie d'un signal contenant la reponse
+            Intent broadcastIntent = new Intent();
+            broadcastIntent.setAction("ACTION_API_RESPONSE");
+            broadcastIntent.putExtra("code", "500");
+            sendBroadcast(broadcastIntent);
         }
     }
 }

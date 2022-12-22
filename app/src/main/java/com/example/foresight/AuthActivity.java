@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,11 +31,19 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
+
 
 public class AuthActivity extends Activity {
 
+    //Input text du formulaire
     EditText mEditMail;
     EditText mEditPass;
+
+    private BroadcastReceiver sendBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,37 +51,149 @@ public class AuthActivity extends Activity {
 
         setContentView(R.layout.activity_auth);
 
+        //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextTextEmailAddress);
         mEditPass = (EditText)findViewById(R.id.editTextTextPassword);
-    }
 
+    }
 
     public void signIn(View view) {
-        /*
-        mFirebaseService.signIn(mEditMail.getText().toString(),mEditPass.getText().toString());
-        System.out.println("alo");
 
-         */
-    }
+        //Vérification que les inputs sont bien remplis
+        if(!mEditMail.getText().toString().equals("") && !mEditPass.getText().toString().equals("")){
 
+            //Appel du service d'api
+            Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
+            intent.putExtra("apiEndpoint", "auth/v1/token?grant_type=password"); //replace with your own API endpoint
+            intent.putExtra("requestType", "POST"); //replace with your own API endpoint
+            intent.putExtra("params", "{\"email\": \""+mEditMail.getText().toString()+"\", \"password\": \""+mEditPass.getText().toString()+"\"}"); //replace with your own API endpoint
+            startService(intent);
 
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //This is where you will receive the result from IntentService
-            System.out.println(intent.getAction());
+            //Reception du broadcast
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("ACTION_API_RESPONSE");
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+
+            sendBroadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    //Recuperation du code retour de la requete
+                    String code = intent.getStringExtra("code");
+
+                    switch (code) {
+                        case "500":
+                            Snackbar.make(view, "Error contacting server", Snackbar.LENGTH_SHORT).show();
+                            break;
+                        case "400":
+                            String error = intent.getStringExtra("response");
+                            try {
+                                JSONObject jsonObject = new JSONObject(error);
+                                Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                            }
+                            break;
+                        default:
+                            String response = intent.getStringExtra("response");
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                SharedPreferences pref = getSharedPreferences("SessionPref", 0);
+
+                                String sessionId = pref.getString("sessionId", null);
+                                if (sessionId == null) {
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("sessionId", jsonObject.getString("id"));
+                                    editor.apply();
+                                }
+                                //Redirection vers page principal
+                                startActivity(new Intent(AuthActivity.this, MainActivity.class));
+
+                            } catch (JSONException e) {
+                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                            }
+                            break;
+                    }
+                }
+            };
+            registerReceiver(sendBroadcastReceiver, filter);
+        }else{
+            Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
         }
-    };
-
+    }
 
     //GET
     //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
     //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
     public void signUp(View view) {
-        Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
-        intent.putExtra("apiEndpoint", "auth/v1/signup"); //replace with your own API endpoint
-        intent.putExtra("requestType", "POST"); //replace with your own API endpoint
-        intent.putExtra("params", "{\"email\": \""+mEditMail.getText().toString()+"\", \"password\": \""+mEditPass.getText().toString()+"\"}"); //replace with your own API endpoint
-        startService(intent);
+
+        //Vérification que les inputs sont bien remplis
+        if(!mEditMail.getText().toString().equals("") && !mEditPass.getText().toString().equals("")){
+
+            //Appel du service d'api
+            Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
+            intent.putExtra("apiEndpoint", "auth/v1/signup"); //replace with your own API endpoint
+            intent.putExtra("requestType", "POST"); //replace with your own API endpoint
+            intent.putExtra("params", "{\"email\": \""+mEditMail.getText().toString()+"\", \"password\": \""+mEditPass.getText().toString()+"\"}"); //replace with your own API endpoint
+            startService(intent);
+
+            //Reception du broadcast
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("ACTION_API_RESPONSE");
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
+
+            sendBroadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    //Recuperation du code retour de la requete
+                    String code = intent.getStringExtra("code");
+
+                    switch (code) {
+                        case "500":
+                            Snackbar.make(view, "Error contacting server", Snackbar.LENGTH_SHORT).show();
+                            break;
+                        case "400":
+                            String error = intent.getStringExtra("response");
+                            try {
+                                JSONObject jsonObject = new JSONObject(error);
+                                Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                            }
+                            break;
+                        default:
+                            String response = intent.getStringExtra("response");
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                SharedPreferences pref = getSharedPreferences("SessionPref", 0);
+
+                                String sessionId = pref.getString("sessionId", null);
+                                if (sessionId == null) {
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("sessionId", jsonObject.getString("id"));
+                                    editor.apply();
+                                }
+                                //Redirection vers page principal
+                                startActivity(new Intent(AuthActivity.this, MainActivity.class));
+
+                            } catch (JSONException e) {
+                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                            }
+                            break;
+                    }
+                }
+            };
+            registerReceiver(sendBroadcastReceiver, filter);
+        }else{
+            Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        unregisterReceiver(sendBroadcastReceiver);
+        super.onStop();
     }
 }
