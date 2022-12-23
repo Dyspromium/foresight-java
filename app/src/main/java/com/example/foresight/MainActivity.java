@@ -25,20 +25,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
-    private NotificationManagerCompat notificationManagerCompat;
 
+    //GET
+    //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
+    //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Check connexion
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            setContentView(R.layout.activity_main);
-        } else {
-            Intent switchActivityIntent = new Intent(this, AuthActivity.class);
-            startActivity(switchActivityIntent);
-        }
+        setContentView(R.layout.activity_main);
 
         //Sensor shaking
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -47,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> goToSceanceActivity());
 
-        //Initialization Notifications
-        this.notificationManagerCompat = NotificationManagerCompat.from(this);
+
 
 
     }
@@ -93,19 +87,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void sendNotif(View view) {
-        String title = "Test Notification";
-        String message = "Bonjour je suis PICLOS";
-
-        Notification notification = new NotificationCompat.Builder(this, NotificationApp.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.border)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-
-        int notificationId = 1;
-        this.notificationManagerCompat.notify(notificationId, notification);
-    }
 }

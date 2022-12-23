@@ -49,6 +49,13 @@ public class AuthActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Verification qu'un utilisateur est deja connecté
+        SharedPreferences pref = getSharedPreferences("SessionPref", 0);
+        String sessionId = pref.getString("sessionId", null);
+        if(sessionId != null){
+            startActivity(new Intent(AuthActivity.this, MainActivity.class));
+        }
+
         setContentView(R.layout.activity_auth);
 
         //Link de la variable avec l'element input du layout
@@ -116,15 +123,12 @@ public class AuthActivity extends Activity {
                     }
                 }
             };
-            registerReceiver(sendBroadcastReceiver, filter);
         }else{
             Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
         }
     }
 
-    //GET
-    //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
-    //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
+
     public void signUp(View view) {
 
         //Vérification que les inputs sont bien remplis
@@ -184,7 +188,6 @@ public class AuthActivity extends Activity {
                     }
                 }
             };
-            registerReceiver(sendBroadcastReceiver, filter);
         }else{
             Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
         }
@@ -193,7 +196,6 @@ public class AuthActivity extends Activity {
     @Override
     protected void onStop()
     {
-        unregisterReceiver(sendBroadcastReceiver);
         super.onStop();
     }
 }
