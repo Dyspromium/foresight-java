@@ -7,18 +7,122 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="55dp"
+        android:background="@color/brown_600"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:id="@+id/azaaz"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:text="@string/foresight"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/programme_de_la_sceance" />
+            android:layout_weight="1" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/brown_200"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="logout"
+            app:srcCompat="@android:drawable/stat_notify_sync"
+            tools:ignore="ContentDescription,ImageContrastCheck,OnClick,SpeakableTextPresentCheck,SpeakableTextPresentCheck,UsingOnClickInXml" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="173dp"
+        android:layout_height="15dp"
+        android:layout_gravity="center"
+        android:text="@string/programme_de_la_sceance"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="72dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="102dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="58dp"
+        android:layout_height="20dp"
+        android:text="10 rep"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="250dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="69dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:text="Exercice : "
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="230dp" />
+
+    <TextView
+        android:id="@+id/textView55"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Développé couché"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="231dp" />
+
+    <TextView
+        android:id="@+id/textView5ehqehq5"
+        android:layout_width="122dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:text="4 set"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="270dp" />
+
+    <TextView
+        android:id="@+id/textViehqrew55"
+        android:layout_width="115dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:text="Nombre de série :"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="270dp" />
+
+    <TextView
+        android:id="@+id/textViewhg55"
+        android:layout_width="83dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:text="Répétitions : "
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="250dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#31A1E5"
+        android:text="Exercice suivant"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="504dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

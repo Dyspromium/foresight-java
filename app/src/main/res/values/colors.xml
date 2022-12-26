@@ -5,6 +5,9 @@
     <color name="gray">#FFcccccc</color>
     <color name="black">#FF222222</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primaryColor">#FF0984e3</color>
-    <color name="secondaryColor">#FF6c5ce7</color>
+    <color name="bg">#C9AC62</color>
+    <color name="light_font">#FBFBFB</color>
+    <color name="grey_font">#ff9e9e9e</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
 </resources>

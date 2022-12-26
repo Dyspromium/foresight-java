@@ -28,6 +28,4 @@ public class SceanceActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-
-
 }

@@ -79,29 +79,17 @@
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:background="@color/primaryColor"
                 android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:text="Créer un exercice" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
-                android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dp"
-                android:text="@string/cr_er_une_sc_ance" />
-            <Button
-                android:id="@+id/buttonNotif"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
                 android:layout_marginEnd="30dp"
-                android:onClick="sendNotif"
-                android:layout_marginStart="30dp"
-                android:text="Test Notification"
-                tools:ignore="OnClick,UsingOnClickInXml" />
+                android:text="Créer une scéance" />
 
         </LinearLayout>
 
