@@ -1,24 +1,22 @@
 package com.example.foresight;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.foresight.detector.ShakeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -28,18 +26,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ShakeDetector mShakeDetector;
 
 
+    //GET
+    //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
+    //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Check connexion
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            setContentView(R.layout.activity_main);
-        } else {
-            Intent switchActivityIntent = new Intent(this, AuthActivity.class);
-            startActivity(switchActivityIntent);
-        }
+        setContentView(R.layout.activity_main);
 
         //Sensor shaking
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -48,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> goToSceanceActivity());
 
-        //Load daily session
+
 
 
     }
@@ -92,4 +86,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
 }
