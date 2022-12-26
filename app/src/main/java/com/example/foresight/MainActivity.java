@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ShakeDetector mShakeDetector;
 
 
-    //GET
-    //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
-    //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +39,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> goToSceanceActivity());
 
+        /*Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
+        intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
+        intent.putExtra("requestType", "GET"); //replace with your own API endpoint
 
-
+         */
 
     }
 
@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(switchActivityIntent);
     }
 
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        goToAuthActivity();
+    public void goToProfile(View view) {
+        Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
+        startActivity(switchActivityIntent);
     }
 
 

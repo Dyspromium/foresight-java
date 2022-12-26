@@ -41,7 +41,8 @@
                 android:backgroundTint="@color/secondaryColor"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="logout"
+                android:onClick="goToProfile"
+                android:padding="5dp"
                 app:srcCompat="@android:drawable/stat_notify_sync"
                 tools:ignore="ContentDescription,ImageContrastCheck,OnClick,SpeakableTextPresentCheck,SpeakableTextPresentCheck,UsingOnClickInXml" />
         </LinearLayout>

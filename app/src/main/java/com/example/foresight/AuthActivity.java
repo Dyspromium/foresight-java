@@ -123,6 +123,7 @@ public class AuthActivity extends Activity {
                     }
                 }
             };
+            registerReceiver(sendBroadcastReceiver, filter);
         }else{
             Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
         }
@@ -153,6 +154,7 @@ public class AuthActivity extends Activity {
                     //Recuperation du code retour de la requete
                     String code = intent.getStringExtra("code");
 
+                    Log.e("Code", code);
                     switch (code) {
                         case "500":
                             Snackbar.make(view, "Error contacting server", Snackbar.LENGTH_SHORT).show();
@@ -163,31 +165,40 @@ public class AuthActivity extends Activity {
                                 JSONObject jsonObject = new JSONObject(error);
                                 Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
                             } catch (JSONException e) {
-                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view, "Error 404 - Can't parse JSON", Snackbar.LENGTH_SHORT).show();
                             }
                             break;
                         default:
                             String response = intent.getStringExtra("response");
+                            Log.e("resp", response);
+
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
+                                JSONObject userObject = new JSONObject(jsonObject.getString("user"));
                                 SharedPreferences pref = getSharedPreferences("SessionPref", 0);
 
-                                String sessionId = pref.getString("sessionId", null);
-                                if (sessionId == null) {
+                                String sessionId = pref.getString("sessionId", "");
+
+                                if (sessionId.equals("")) {
+
                                     SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString("sessionId", jsonObject.getString("id"));
+                                    editor.putString("sessionId", userObject.getString("id"));
                                     editor.apply();
                                 }
+
                                 //Redirection vers page principal
                                 startActivity(new Intent(AuthActivity.this, MainActivity.class));
 
+
+
                             } catch (JSONException e) {
-                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view, e.toString(), Snackbar.LENGTH_SHORT).show();
                             }
                             break;
                     }
                 }
             };
+            registerReceiver(sendBroadcastReceiver, filter);
         }else{
             Snackbar.make(view, "Please Provide Email & Password", Snackbar.LENGTH_SHORT).show();
         }
