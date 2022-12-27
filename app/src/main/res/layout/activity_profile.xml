@@ -5,36 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible">
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="84dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="16dp">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="73dp"
-        android:layout_height="58dp"
-        app:srcCompat="@drawable/bg"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="73dp"
+            android:layout_height="58dp"
+            app:srcCompat="@drawable/bg" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/foresight"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="23dp"
-        android:textColor="#000000"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <ImageButton
-        android:id="@+id/searchImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_preferences"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/foresight"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/searchImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_preferences" />
+    </LinearLayout>
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
@@ -54,63 +64,87 @@
         tools:layout_editor_absoluteX="165dp"
         tools:layout_editor_absoluteY="584dp" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword3"
-        android:layout_width="278dp"
-        android:layout_height="36dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="Password"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="522dp" />
+    <LinearLayout
+        android:layout_width="315dp"
+        android:layout_height="281dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="267dp">
 
-    <EditText
-        android:id="@+id/editTextTextPassword3"
-        android:layout_width="278dp"
-        android:layout_height="36dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="Password"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="453dp" />
+        <EditText
+            android:id="@+id/editTextNumber2"
+            android:layout_width="276dp"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="Age" />
 
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="128dp"
-        android:layout_height="47dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="Poids"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="391dp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="17dp" />
 
-    <EditText
-        android:id="@+id/editTextNumber2"
-        android:layout_width="276dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="Age"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="332dp" />
+        <EditText
+            android:id="@+id/editTextTextPersonName3"
+            android:layout_width="278dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Prénom" />
 
-    <EditText
-        android:id="@+id/editTextNumber2"
-        android:layout_width="126dp"
-        android:layout_height="46dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="Taille"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="391dp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="13dp" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="278dp"
-        android:layout_height="46dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Prénom"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="274dp" />
+        <LinearLayout
+            android:layout_width="282dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextNumber2"
+                android:layout_width="126dp"
+                android:layout_height="46dp"
+                android:ems="10"
+                android:inputType="number"
+                android:text="Taille" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/editTextNumber"
+                android:layout_width="128dp"
+                android:layout_height="47dp"
+                android:ems="10"
+                android:inputType="number"
+                android:text="Poids" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword3"
+            android:layout_width="278dp"
+            android:layout_height="36dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="Password" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword3"
+            android:layout_width="278dp"
+            android:layout_height="36dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="Password" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
