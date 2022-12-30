@@ -14,7 +14,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foresight.detector.ShakeDetector;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ProfileActivity extends Activity {
