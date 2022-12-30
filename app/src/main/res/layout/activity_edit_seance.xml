@@ -5,180 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible">
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="84dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="16dp">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="73dp"
-        android:layout_height="58dp"
-        app:srcCompat="@drawable/bg"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="73dp"
+            android:layout_height="58dp"
+            app:srcCompat="@drawable/bg" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/foresight"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="23dp"
-        android:textColor="#000000"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <ImageButton
-        android:id="@+id/searchImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_preferences"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/foresight"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_example2"
-        android:layout_width="196dp"
-        android:layout_height="41dp"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:text="Séance Push"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="95dp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_dialog_info"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <TextView
-        android:id="@+id/txt_example6"
-        android:layout_width="304dp"
-        android:layout_height="200dp"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:text="Bench   4x10   85kg "
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="375dp" />
-
-    <TextView
-        android:id="@+id/txt_example6"
-        android:layout_width="208dp"
-        android:layout_height="43dp"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:text="Bench   4x10   85kg "
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="204dp" />
-
-    <TextView
-        android:id="@+id/txt_example6"
-        android:layout_width="208dp"
-        android:layout_height="43dp"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:text="Bench   4x10   85kg "
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_delete"
-        tools:layout_editor_absoluteX="298dp"
-        tools:layout_editor_absoluteY="375dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton5"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_delete"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="318dp" />
-
-    <TextView
-        android:id="@+id/txt_example"
-        android:layout_width="208dp"
-        android:layout_height="43dp"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:text="Bench   4x10   85kg "
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="318dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="180dp"
-        android:layout_height="42dp"
-        android:background="@drawable/button_custom"
-        android:onClick="onDrawableButtonClicked"
-        android:text="+ Ajouter un exercice"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="150dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="85dp"
-        android:layout_height="42dp"
-        android:background="@drawable/button_custom"
-        android:onClick="onDrawableButtonClicked"
-        android:text="Info"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="253dp"
-        tools:layout_editor_absoluteY="95dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton3"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_dialog_info"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="375dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_dialog_info"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="318dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_delete"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_dialog_info"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="204dp" />
+        <ImageButton
+            android:id="@+id/searchImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_preferences" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="180dp"
@@ -187,34 +53,230 @@
         android:onClick="onDrawableButtonClicked"
         android:text="Sauvegarder"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="594dp" />
+        tools:layout_editor_absoluteX="171dp"
+        tools:layout_editor_absoluteY="601dp" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="124dp"
-        android:layout_height="143dp"
-        tools:layout_editor_absoluteX="214dp"
-        tools:layout_editor_absoluteY="422dp"
-        tools:srcCompat="@tools:sample/avatars" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="180dp"
+        android:layout_height="42dp"
+        android:background="@drawable/button_custom"
+        android:onClick="onDrawableButtonClicked"
+        android:text="+ Ajouter un exercice"
+        android:textColor="@color/white"
+        tools:layout_editor_absoluteX="170dp"
+        tools:layout_editor_absoluteY="161dp" />
 
-    <ImageButton
-        android:id="@+id/searchImageButton1"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_delete"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="204dp" />
+    <LinearLayout
+        android:layout_width="311dp"
+        android:layout_height="374dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="214dp">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="139dp"
-        android:layout_height="146dp"
-        android:text="Allongez-vous sur le dos sur une machine de développé couché et placez vos mains à la largeur des épaules. Abaissez lentement votre poitrine vers la barre jusqu'à ce que vos coudes soient à un angle d'environ 90 degrés. Faites une pause et revenez à la position de départ en contrôlant votre mouvement. Répétez cet exercice pour le nombre de répétitions choisi. "
-        android:textSize="9sp"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="418dp" />
+        <LinearLayout
+            android:layout_width="316dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/txt_example6"
+                android:layout_width="208dp"
+                android:layout_height="43dp"
+                android:background="@drawable/box"
+                android:padding="10dp"
+                android:text="Bench   4x10   85kg "
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_dialog_info" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_delete" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="316dp"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_example6"
+                android:layout_width="208dp"
+                android:layout_height="43dp"
+                android:background="@drawable/box"
+                android:padding="10dp"
+                android:text="Bench   4x10   85kg "
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_dialog_info" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_delete" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="316dp"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_example6"
+                android:layout_width="208dp"
+                android:layout_height="43dp"
+                android:background="@drawable/box"
+                android:padding="10dp"
+                android:text="Bench   4x10   85kg "
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_dialog_info" />
+
+            <ImageButton
+                android:id="@+id/searchImageButton1"
+                android:layout_width="49dp"
+                android:layout_height="43dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@android:drawable/ic_delete" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="319dp"
+            android:layout_height="209dp"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="316dp"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_example6"
+                    android:layout_width="208dp"
+                    android:layout_height="43dp"
+                    android:background="@drawable/box"
+                    android:padding="10dp"
+                    android:text="Bench   4x10   85kg "
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/searchImageButton1"
+                    android:layout_width="49dp"
+                    android:layout_height="43dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_dialog_info" />
+
+                <ImageButton
+                    android:id="@+id/searchImageButton1"
+                    android:layout_width="49dp"
+                    android:layout_height="43dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_delete" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="317dp"
+                android:layout_height="151dp"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="139dp"
+                    android:layout_height="146dp"
+                    android:text="Allongez-vous sur le dos sur une machine de développé couché et placez vos mains à la largeur des épaules. Abaissez lentement votre poitrine vers la barre jusqu'à ce que vos coudes soient à un angle d'environ 90 degrés. Faites une pause et revenez à la position de départ en contrôlant votre mouvement. Répétez cet exercice pour le nombre de répétitions choisi. "
+                    android:textSize="9sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="124dp"
+                    android:layout_height="143dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="313dp"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="109dp">
+
+        <TextView
+            android:id="@+id/txt_example2"
+            android:layout_width="196dp"
+            android:layout_height="41dp"
+            android:background="@drawable/box"
+            android:padding="10dp"
+            android:text="Séance Push"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="85dp"
+            android:layout_height="42dp"
+            android:background="@drawable/button_custom"
+            android:onClick="onDrawableButtonClicked"
+            android:text="Info"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
