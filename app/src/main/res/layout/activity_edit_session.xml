@@ -66,18 +66,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="goToSessionActivity"
-            android:text="@string/start_session"
+            android:text="@string/save"
             tools:ignore="UsingOnClickInXml" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/find_nearest_gym"
-            android:textColor="@color/gray"
-            android:onClick="goToFindGym"
-            android:background="@android:color/transparent"
-            tools:ignore="UsingOnClickInXml" />
-
     </LinearLayout>
 
 </LinearLayout>

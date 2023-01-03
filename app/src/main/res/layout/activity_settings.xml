@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible">
+
+    <!--
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="84dp"
@@ -16,7 +18,7 @@
             android:id="@+id/imageView4"
             android:layout_width="73dp"
             android:layout_height="58dp"
-            app:srcCompat="@drawable/bg" />
+            app:srcCompat="@drawable/logo" />
 
         <Space
             android:layout_width="wrap_content"
@@ -145,6 +147,6 @@
             android:ems="10"
             android:inputType="textPassword"
             android:text="Password" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

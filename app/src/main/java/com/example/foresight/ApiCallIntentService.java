@@ -7,8 +7,10 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 
 public class ApiCallIntentService extends IntentService {
@@ -32,9 +34,9 @@ public class ApiCallIntentService extends IntentService {
         String requestType = intent.getStringExtra("requestType");
         String params = intent.getStringExtra("params");
 
+
         //Si erreur dans ce code -> impossible de contacter la base de donnée -> error 500
         try {
-
             URL url = new URL(apiUrl+endPoint);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -42,16 +44,17 @@ public class ApiCallIntentService extends IntentService {
             conn.setRequestProperty("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbWxjZWNueGlrenhscmJsa2dyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2OTcyNzAyOSwiZXhwIjoxOTg1MzAzMDI5fQ.wmNk4Vq54W4wBGN74C-DUM-2mJ_td6MQxrQrSzIm19g");
             conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbWxjZWNueGlrenhscmJsa2dyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2OTcyNzAyOSwiZXhwIjoxOTg1MzAzMDI5fQ.wmNk4Vq54W4wBGN74C-DUM-2mJ_td6MQxrQrSzIm19g");
 
+            Log.e("debug", requestType);
             if (requestType.equals("POST")) {
                 conn.setDoOutput(true);
                 //Ajout des parametres à la requete
-                try(OutputStream os = conn.getOutputStream()) {
-                    byte[] input = params.getBytes("utf-8");
-                    os.write(input, 0, input.length);
+                try(OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream())) {
+                    os.write(params);
                 }
             }
 
             try{
+
                 //Lecture de la reponse
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conn.getInputStream()));

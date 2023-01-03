@@ -1,22 +1,13 @@
 package com.example.foresight;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.foresight.detector.ShakeDetector;
-
-
-public class ProfileActivity extends Activity {
+public class SettingsActivity extends Activity {
 
     //GET
     //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
@@ -25,7 +16,7 @@ public class ProfileActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_settings);
 
     }
     public void signOut(View view) {
@@ -37,7 +28,7 @@ public class ProfileActivity extends Activity {
         editor.apply();
 
         //Redirection vers page auth
-        startActivity(new Intent(ProfileActivity.this, AuthActivity.class));
+        startActivity(new Intent(SettingsActivity.this, SignInActivity.class));
 
     }
 }
