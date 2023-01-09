@@ -1,4 +1,4 @@
-package com.example.foresight;
+package com.example.foresight.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.foresight.service.ApiCallIntentService;
+import com.example.foresight.R;
 import com.example.foresight.detector.ShakeDetector;
 
 import org.json.JSONArray;
@@ -87,11 +89,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         try {
                             JSONArray sessionList = new JSONArray (response);
 
-                            LinearLayout layout = (LinearLayout) findViewById(R.id.layoutSession);
+                            LinearLayout layout = findViewById(R.id.layoutSession);
 
                             for (int i=0; i < sessionList.length(); i++) {
-
-                                Log.e("Error 404", String.valueOf(sessionList.getJSONObject(i)));
 
                                 JSONObject session = sessionList.getJSONObject(i);
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 wrapper.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
                                 wrapper.setOnClickListener(v -> {
                                     try {
-                                        goToEditSession(String.valueOf(session.getInt("id")));
+                                        goToEditSession(String.valueOf(session.getInt("id")), session.getString("name"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -161,9 +161,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(switchActivityIntent);
     }
 
-    public void goToEditSession(String id) {
+    public void goToEditSession(String id, String name) {
         Intent switchActivityIntent = new Intent(this, EditSessionActivity.class);
         switchActivityIntent.putExtra("sessionId", id);
+        switchActivityIntent.putExtra("sessionName", name);
         startActivity(switchActivityIntent);
     }
 
@@ -189,6 +190,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             sendBroadcastReceiver = null;
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(sendBroadcastReceiver != null){
+            unregisterReceiver(sendBroadcastReceiver);
+            sendBroadcastReceiver = null;
+        }
     }
 
     @Override

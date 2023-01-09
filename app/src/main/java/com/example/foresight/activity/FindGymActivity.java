@@ -1,4 +1,4 @@
-package com.example.foresight;
+package com.example.foresight.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -19,6 +19,9 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
+import com.example.foresight.service.ApiCallIntentService;
+import com.example.foresight.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

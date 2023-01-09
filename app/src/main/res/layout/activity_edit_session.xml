@@ -46,11 +46,42 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutSession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="7dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/element_border">
+        <TextView
+            android:id="@+id/sessionTitle"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical">
+        <Button
+            android:background="@drawable/button_bg"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goToSessionActivity"
+            android:text="Add Exercice"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutExercices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
+        android:paddingTop="30dp"
         android:paddingHorizontal="20dp">
     </LinearLayout>
     <LinearLayout
@@ -59,10 +90,10 @@
         android:layout_gravity="end"
         android:paddingHorizontal="20dp"
         android:orientation="vertical">
-        <Button android:id="@+id/button"
+        <Button
             android:background="@drawable/button_bg"
             android:textColor="@color/white"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="goToSessionActivity"

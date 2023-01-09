@@ -1,4 +1,4 @@
-package com.example.foresight;
+package com.example.foresight.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,18 +8,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.foresight.service.ApiCallIntentService;
+import com.example.foresight.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class SignInActivity extends Activity {
+public class SignUpActivity extends Activity {
 
     //Input text du formulaire
     EditText mEditMail;
@@ -36,10 +37,10 @@ public class SignInActivity extends Activity {
         SharedPreferences pref = getSharedPreferences("SessionPref", 0);
         String sessionId = pref.getString("sessionId", null);
         if(sessionId != null){
-            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
         }
 
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_sign_up);
 
         //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextEmailAddress);
@@ -47,14 +48,14 @@ public class SignInActivity extends Activity {
 
     }
 
-    public void signIn(View view) {
+    public void signUp(View view) {
 
         //Vérification que les inputs sont bien remplis
         if(!mEditMail.getText().toString().equals("") && !mEditPass.getText().toString().equals("")){
 
             //Appel du service d'api
             Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
-            intent.putExtra("apiEndpoint", "auth/v1/token?grant_type=password"); //replace with your own API endpoint
+            intent.putExtra("apiEndpoint", "auth/v1/signup"); //replace with your own API endpoint
             intent.putExtra("requestType", "POST"); //replace with your own API endpoint
             intent.putExtra("params", "{\"email\": \""+mEditMail.getText().toString()+"\", \"password\": \""+mEditPass.getText().toString()+"\"}"); //replace with your own API endpoint
             startService(intent);
@@ -81,26 +82,34 @@ public class SignInActivity extends Activity {
                                 JSONObject jsonObject = new JSONObject(error);
                                 Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
                             } catch (JSONException e) {
-                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view, "Error 404 - Can't parse JSON", Snackbar.LENGTH_SHORT).show();
                             }
                             break;
                         default:
                             String response = intent.getStringExtra("response");
+                            Log.e("resp", response);
+
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
+                                JSONObject userObject = new JSONObject(jsonObject.getString("user"));
                                 SharedPreferences pref = getSharedPreferences("SessionPref", 0);
 
-                                String sessionId = pref.getString("sessionId", null);
-                                if (sessionId == null) {
+                                String sessionId = pref.getString("sessionId", "");
+
+                                if (sessionId.equals("")) {
+
                                     SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString("sessionId", jsonObject.getString("id"));
+                                    editor.putString("sessionId", userObject.getString("id"));
                                     editor.apply();
                                 }
+
                                 //Redirection vers page principal
-                                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+
+
 
                             } catch (JSONException e) {
-                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view, e.toString(), Snackbar.LENGTH_SHORT).show();
                             }
                             break;
                     }
@@ -112,8 +121,8 @@ public class SignInActivity extends Activity {
         }
     }
 
-    public void goToSignUpActivity(View view) {
-        Intent intent = new Intent(this, SignUpActivity.class);
+    public void goToSignInActivity(View view) {
+        Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
 
@@ -122,6 +131,4 @@ public class SignInActivity extends Activity {
     {
         super.onStop();
     }
-
-
 }

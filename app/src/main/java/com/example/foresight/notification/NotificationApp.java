@@ -1,4 +1,4 @@
-package com.example.foresight;
+package com.example.foresight.notification;
 
 
 import android.app.Application;

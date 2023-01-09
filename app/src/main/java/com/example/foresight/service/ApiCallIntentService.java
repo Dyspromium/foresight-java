@@ -1,4 +1,4 @@
-package com.example.foresight;
+package com.example.foresight.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -44,8 +44,9 @@ public class ApiCallIntentService extends IntentService {
             conn.setRequestProperty("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbWxjZWNueGlrenhscmJsa2dyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2OTcyNzAyOSwiZXhwIjoxOTg1MzAzMDI5fQ.wmNk4Vq54W4wBGN74C-DUM-2mJ_td6MQxrQrSzIm19g");
             conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbWxjZWNueGlrenhscmJsa2dyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2OTcyNzAyOSwiZXhwIjoxOTg1MzAzMDI5fQ.wmNk4Vq54W4wBGN74C-DUM-2mJ_td6MQxrQrSzIm19g");
 
-            Log.e("debug", requestType);
             if (requestType.equals("POST")) {
+                conn.setRequestProperty("Content-Type", "application/json");
+
                 conn.setDoOutput(true);
                 //Ajout des parametres à la requete
                 try(OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream())) {
@@ -54,7 +55,6 @@ public class ApiCallIntentService extends IntentService {
             }
 
             try{
-
                 //Lecture de la reponse
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(conn.getInputStream()));
@@ -88,6 +88,8 @@ public class ApiCallIntentService extends IntentService {
                 Intent broadcastIntent = new Intent();
                 broadcastIntent.setAction("ACTION_API_RESPONSE");
                 broadcastIntent.putExtra("response", error.toString());
+
+
                 broadcastIntent.putExtra("code", "400");
                 sendBroadcast(broadcastIntent);
             }

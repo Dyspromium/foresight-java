@@ -1,10 +1,12 @@
-package com.example.foresight;
+package com.example.foresight.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.foresight.R;
 
 
 public class SettingsActivity extends Activity {
