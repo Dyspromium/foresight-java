@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -40,12 +42,35 @@ public class SignInActivity extends Activity {
             startActivity(new Intent(SignInActivity.this, MainActivity.class));
         }
 
-        setContentView(R.layout.activity_sign_in);
+        Configuration configuration = getResources().getConfiguration();
+        int orientation = configuration.orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_sign_in_landscape);
+        } else{
+            setContentView(R.layout.activity_sign_in_portrait);
+        }
 
         //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextEmailAddress);
         mEditPass = (EditText)findViewById(R.id.editTextPassword);
 
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Log.e("debug", "config update");
+        Log.e("debug", String.valueOf(newConfig.orientation));
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_sign_in_landscape);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_sign_in_portrait);
+        }
     }
 
     public void signIn(View view) {

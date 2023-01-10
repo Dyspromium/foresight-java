@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,12 +41,31 @@ public class SignUpActivity extends Activity {
             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
         }
 
-        setContentView(R.layout.activity_sign_up);
+        Configuration configuration = getResources().getConfiguration();
+        int orientation = configuration.orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_sign_up_landscape);
+        } else{
+            setContentView(R.layout.activity_sign_up_portrait);
+        }
 
         //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextEmailAddress);
         mEditPass = (EditText)findViewById(R.id.editTextPassword);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_sign_up_landscape);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_sign_up_portrait);
+        }
     }
 
     public void signUp(View view) {

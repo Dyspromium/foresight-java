@@ -14,13 +14,11 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:padding="15dp">
-
         <ImageView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/foresight_logo"
             android:src="@drawable/logo_small" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -36,7 +34,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
         <ImageView
             android:layout_width="35dp"
             android:layout_height="match_parent"
@@ -44,40 +41,45 @@
             android:contentDescription="@string/settings_icon"
             android:src="@drawable/settings_icon" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutSession"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingHorizontal="20dp">
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:paddingHorizontal="20dp"
-        android:orientation="vertical">
-        <Button android:id="@+id/button"
-            android:background="@drawable/button_bg"
-            android:textColor="@color/white"
-            android:layout_marginTop="30dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="goToSessionActivity"
-            android:text="@string/start_session"
-            tools:ignore="UsingOnClickInXml" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/find_nearest_gym"
-            android:textColor="@color/gray"
-            android:onClick="goToFindGym"
-            android:background="@android:color/transparent"
-            tools:ignore="UsingOnClickInXml" />
-
-    </LinearLayout>
-
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/layoutSession"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingHorizontal="20dp">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingHorizontal="20dp"
+                android:orientation="vertical">
+                <Button android:id="@+id/button"
+                    android:background="@drawable/button_bg"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="goToSessionActivity"
+                    android:text="@string/start_session"
+                    tools:ignore="UsingOnClickInXml" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/find_nearest_gym"
+                    android:textColor="@color/gray"
+                    android:onClick="goToFindGym"
+                    android:background="@android:color/transparent"
+                    tools:ignore="UsingOnClickInXml" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
