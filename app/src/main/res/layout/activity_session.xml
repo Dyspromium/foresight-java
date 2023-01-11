@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -46,16 +47,49 @@
     <LinearLayout
         android:id="@+id/layoutGym"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
+        android:paddingVertical="7dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/element_border"
         android:paddingHorizontal="20dp">
         <TextView
+            android:id="@+id/sessionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Session ouhou"
             android:textColor="@color/black"
             android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/exerciceState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="7dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/element_border"
+        android:paddingHorizontal="20dp">
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical">
+        <Button android:id="@+id/buttonState"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/white"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="updateSessionState"
+            android:text="@string/next"
+            tools:ignore="UsingOnClickInXml" />
     </LinearLayout>
 
 </LinearLayout>

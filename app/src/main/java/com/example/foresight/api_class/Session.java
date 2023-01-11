@@ -13,11 +13,11 @@ public class Session implements Parcelable {
 
     public String name;
     public ArrayList<Exercice> exercices;
-    public String fk_session;
+    public int fk_session;
 
     public Session(JSONObject data) throws JSONException {
         this.name = data.getString("name");
-        this.fk_session = data.getString("id");
+        this.fk_session = data.getInt("id");
         this.exercices = new ArrayList<>();
     }
 
@@ -33,7 +33,7 @@ public class Session implements Parcelable {
         } else {
             exercices = null;
         }
-        fk_session = in.readString();
+        fk_session = Integer.parseInt(in.readString());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Session implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeList(exercices);
         }
-        dest.writeString(fk_session);
+        dest.writeString(String.valueOf(fk_session));
     }
 
     @SuppressWarnings("unused")

@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private BroadcastReceiver sendBroadcastReceiver;
 
-    ArrayList<Session> sessions;
-    Session selectedSession;
+    public ArrayList<Session> sessions = new ArrayList<>();
+    public Session selectedSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +117,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 wrapper.setLayoutParams(layoutParams);
                                 wrapper.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
                                 wrapper.setOnClickListener(v -> {
-                                    goToEditSession(String.valueOf(session.fk_session), session.name);
+                                    for (int j=0; j< sessions.size(); j++) {
+                                        if(sessions.get(j).fk_session == session.fk_session){
+                                            selectedSession = sessions.get(j);
+                                            LinearLayout selected = findViewById(selectedSession.fk_session);
+                                            selected.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border_selected));
+                                        }
+                                        else{
+                                            LinearLayout selected = findViewById(sessions.get(j).fk_session);
+                                            selected.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
+                                        }
+                                    }
+                                    //goToEditSession(String.valueOf(session.fk_session), session.name);
                                 });
-
+                                wrapper.setId(session.fk_session);
 
                                 TextView name = new TextView(thisType);
                                 name.setText(session.name);
@@ -148,7 +159,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 wrapper.addView(icon);
 
                                 layout.addView(wrapper);
+
+                                sessions.add(session);
                             }
+
+                            LinearLayout selected = findViewById(selectedSession.fk_session);
+                            selected.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border_selected));
+
 
                         } catch (JSONException e) {
                             Log.e("Error", e.toString());
