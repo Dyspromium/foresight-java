@@ -21,6 +21,8 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 
 public class SignInActivity extends Activity {
 
@@ -104,6 +106,7 @@ public class SignInActivity extends Activity {
                         case "400":
                             String error = intent.getStringExtra("response");
                             try {
+                                Log.e("debug", error);
                                 JSONObject jsonObject = new JSONObject(error);
                                 Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
                             } catch (JSONException e) {
@@ -112,21 +115,24 @@ public class SignInActivity extends Activity {
                             break;
                         default:
                             String response = intent.getStringExtra("response");
+
+                            Log.e("debug", response);
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
+
                                 SharedPreferences pref = getSharedPreferences("SessionPref", 0);
 
                                 String sessionId = pref.getString("sessionId", null);
                                 if (sessionId == null) {
                                     SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString("sessionId", jsonObject.getString("id"));
+                                    editor.putString("sessionId", jsonObject.getJSONObject("user").getString("id"));
                                     editor.apply();
                                 }
                                 //Redirection vers page principal
                                 startActivity(new Intent(SignInActivity.this, MainActivity.class));
 
                             } catch (JSONException e) {
-                                Snackbar.make(view, "Error 404", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
                             }
                             break;
                     }

@@ -1,152 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible">
-
-    <!--
+    android:background="@color/white"
+    android:orientation="vertical">
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="84dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="16dp">
+        android:padding="15dp">
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="73dp"
-            android:layout_height="58dp"
-            app:srcCompat="@drawable/logo" />
-
-        <Space
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/foresight"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/searchImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:src="@android:drawable/ic_menu_preferences" />
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="109dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="180dp"
-        android:layout_height="42dp"
-        android:background="@drawable/button_custom"
-        android:onClick="onDrawableButtonClicked"
-        android:text="Sauvegarder"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="584dp" />
-
-    <LinearLayout
-        android:layout_width="315dp"
-        android:layout_height="281dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="267dp">
-
-        <EditText
-            android:id="@+id/editTextNumber2"
-            android:layout_width="276dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="number"
-            android:text="Age" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="17dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
-            android:layout_width="278dp"
-            android:layout_height="46dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Prénom" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="13dp" />
+            android:contentDescription="@string/foresight_logo"
+            android:src="@drawable/logo_small" />
 
         <LinearLayout
-            android:layout_width="282dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextNumber2"
-                android:layout_width="126dp"
-                android:layout_height="46dp"
-                android:ems="10"
-                android:inputType="number"
-                android:text="Taille" />
-
-            <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/editTextNumber"
-                android:layout_width="128dp"
-                android:layout_height="47dp"
-                android:ems="10"
-                android:inputType="number"
-                android:text="Poids" />
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
         </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:contentDescription="@string/settings_icon"
+            android:src="@drawable/settings_icon" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
         <EditText
-            android:id="@+id/editTextTextPassword3"
-            android:layout_width="278dp"
-            android:layout_height="36dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:text="Password" />
-
-        <Space
+            android:id="@+id/editTextName"
             android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/input_border"
+            android:textColorHint="@color/black"
+            android:padding="10dp"
+            android:autofillHints="" />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
         <EditText
-            android:id="@+id/editTextTextPassword3"
-            android:layout_width="278dp"
-            android:layout_height="36dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:text="Password" />
-    </LinearLayout>-->
+            android:id="@+id/editTextAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/age"
+            android:inputType="number"
+            android:background="@drawable/input_border"
+            android:textColorHint="@color/black"
+            android:padding="10dp"
+            android:autofillHints="" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editTextSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/age"
+            android:inputType="number"
+            android:background="@drawable/input_border"
+            android:textColorHint="@color/black"
+            android:padding="10dp"
+            android:autofillHints="" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editTextWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/age"
+            android:inputType="number"
+            android:background="@drawable/input_border"
+            android:textColorHint="@color/black"
+            android:padding="10dp"
+            android:autofillHints="" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical">
+        <Button android:id="@+id/button"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/white"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            android:textColor="@color/gray"
+            android:onClick="signOut"
+            android:background="@android:color/transparent"
+            tools:ignore="UsingOnClickInXml" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -11,9 +11,6 @@ import com.example.foresight.R;
 
 public class SettingsActivity extends Activity {
 
-    //GET
-    //intent.putExtra("apiEndpoint", "rest/v1/gym?select=*"); //replace with your own API endpoint
-    //intent.putExtra("requestType", "GET"); //replace with your own API endpoint
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

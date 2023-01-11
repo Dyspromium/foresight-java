@@ -13,12 +13,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.foresight.api_class.Session;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.example.foresight.detector.ShakeDetector;
@@ -26,6 +28,8 @@ import com.example.foresight.detector.ShakeDetector;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -35,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ShakeDetector mShakeDetector;
 
     private BroadcastReceiver sendBroadcastReceiver;
+
+    ArrayList<Session> sessions;
+    Session selectedSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                             for (int i=0; i < sessionList.length(); i++) {
 
-                                JSONObject session = sessionList.getJSONObject(i);
+                                JSONObject sessionObject = sessionList.getJSONObject(i);
+                                Session session = new Session(sessionObject);
+                                selectedSession = session;
 
                                 LinearLayout wrapper = new LinearLayout(thisType);
                                 wrapper.setPadding((int) (15 * getResources().getDisplayMetrics().density),
@@ -108,16 +117,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 wrapper.setLayoutParams(layoutParams);
                                 wrapper.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
                                 wrapper.setOnClickListener(v -> {
-                                    try {
-                                        goToEditSession(String.valueOf(session.getInt("id")), session.getString("name"));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    goToEditSession(String.valueOf(session.fk_session), session.name);
                                 });
 
 
                                 TextView name = new TextView(thisType);
-                                name.setText(session.getString("name"));
+                                name.setText(session.name);
                                 name.setTextSize(20);
                                 name.setTextColor(ContextCompat.getColor(context, R.color.gray));
                                 wrapper.addView(name);
@@ -158,6 +163,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void goToSessionActivity(View view) {
         Intent switchActivityIntent = new Intent(this, SessionActivity.class);
+        switchActivityIntent.putExtra("session", (Parcelable) selectedSession);
+        startActivity(switchActivityIntent);
+    }
+    public void goToSettingsActivity(View view) {
+        Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
         startActivity(switchActivityIntent);
     }
 
