@@ -44,9 +44,38 @@
             android:src="@drawable/settings_icon" />
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:paddingVertical="20dp">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/profilePicture"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/profile_picture"
+            android:src="@drawable/default_profile" />
+        <Button android:id="@+id/buttonEdit"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_alignEnd="@id/profilePicture"
+            android:layout_alignBottom="@id/profilePicture"
+            android:onClick="openCamera"
+            android:layout_marginEnd="-50dp"
+            android:layout_marginBottom="3dp"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            tools:ignore="UsingOnClickInXml" />
+
+    </RelativeLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:orientation="horizontal">
         <EditText
@@ -57,13 +86,16 @@
             android:inputType="textEmailAddress"
             android:background="@drawable/input_border"
             android:textColorHint="@color/black"
+            android:textColor="@color/gray"
+
             android:padding="10dp"
             android:autofillHints="" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="20dp"
         android:orientation="horizontal">
         <EditText
@@ -74,39 +106,47 @@
             android:inputType="number"
             android:background="@drawable/input_border"
             android:textColorHint="@color/black"
+            android:textColor="@color/gray"
+
             android:padding="10dp"
             android:autofillHints="" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/editTextSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/age"
+            android:hint="@string/size"
             android:inputType="number"
             android:background="@drawable/input_border"
             android:textColorHint="@color/black"
+            android:textColor="@color/gray"
+
             android:padding="10dp"
             android:autofillHints="" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <EditText
             android:id="@+id/editTextWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/age"
+            android:hint="@string/weight"
             android:inputType="number"
             android:background="@drawable/input_border"
             android:textColorHint="@color/black"
+            android:textColor="@color/gray"
+
             android:padding="10dp"
             android:autofillHints="" />
 
@@ -124,8 +164,10 @@
             android:textColor="@color/white"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
+            android:onClick="saveData"
             android:layout_height="wrap_content"
-            android:text="@string/save" />
+            android:text="@string/save"
+            tools:ignore="UsingOnClickInXml" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
