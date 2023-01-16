@@ -21,6 +21,7 @@
         android:inputType="textEmailAddress"
         android:background="@drawable/input_border"
         android:textColorHint="@color/black"
+        android:textColor="@color/gray"
         android:padding="10dp"
         android:autofillHints="" />
     <EditText
@@ -31,6 +32,7 @@
         android:hint="@string/enter_password"
         android:inputType="textPassword"
         android:textColorHint="@color/black"
+        android:textColor="@color/gray"
         android:background="@drawable/input_border"
         android:padding="10dp"
         android:autofillHints="" />

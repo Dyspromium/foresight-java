@@ -12,11 +12,13 @@ import java.util.List;
 public class Session implements Parcelable {
 
     public String name;
+    public int difficulty;
     public ArrayList<Exercice> exercices;
     public int fk_session;
 
     public Session(JSONObject data) throws JSONException {
         this.name = data.getString("name");
+        this.difficulty = data.getInt("difficulty");
         this.fk_session = data.getInt("id");
         this.exercices = new ArrayList<>();
     }
@@ -27,6 +29,7 @@ public class Session implements Parcelable {
 
     protected Session(Parcel in) {
         name = in.readString();
+        difficulty = Integer.parseInt(in.readString());
         if (in.readByte() == 0x01) {
             exercices = new ArrayList<Exercice>();
             in.readList(exercices, Exercice.class.getClassLoader());
@@ -44,6 +47,7 @@ public class Session implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(String.valueOf(difficulty));
         if (exercices == null) {
             dest.writeByte((byte) (0x00));
         } else {

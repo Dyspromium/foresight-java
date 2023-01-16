@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.example.foresight.api_class.Exercice;
+import com.example.foresight.api_class.Session;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 
@@ -31,9 +33,7 @@ public class EditSessionActivity extends Activity {
     private BroadcastReceiver joinBroadcastReceiver;
     private BroadcastReceiver exerciceBroadcastReceiver;
 
-    private List<Exercice> exercices;
-    private String sessionId;
-    private String sessionName;
+    Session session;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,8 +42,8 @@ public class EditSessionActivity extends Activity {
 
         setContentView(R.layout.activity_edit_session);
 
-        sessionId = getIntent().getStringExtra("sessionId");
-        sessionName = getIntent().getStringExtra("sessionName");
+        session = getIntent().getParcelableExtra("session");
+
         fetchExerciceJoin();
     }
 
@@ -51,7 +51,7 @@ public class EditSessionActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
         intent.putExtra("apiEndpoint", "rest/v1/rpc/get_exercices_by_session");
         intent.putExtra("requestType", "POST");
-        intent.putExtra("params", "{\"session_id\": \""+sessionId+"\"}"); //replace with your own API endpoint
+        intent.putExtra("params", "{\"session_id\": \""+session.fk_session+"\"}"); //replace with your own API endpoint
         startService(intent);
 
         IntentFilter filter = new IntentFilter();
@@ -88,9 +88,9 @@ public class EditSessionActivity extends Activity {
                             JSONArray exerciceList = new JSONArray (response);
 
                             LinearLayout layout = findViewById(R.id.layoutExercices);
-                            TextView title = findViewById(R.id.sessionTitle);
-                            Log.e("debug", sessionName);
-                            title.setText(sessionName);
+                            EditText title = findViewById(R.id.sessionTitle);
+                            Log.e("debug", session.name);
+                            title.setText(session.name);
 
                             for (int i=0; i < exerciceList.length(); i++) {
 
@@ -109,9 +109,11 @@ public class EditSessionActivity extends Activity {
                                 wrapper.setOrientation(LinearLayout.HORIZONTAL);
                                 layoutParams.setMargins(0, 0, 0, (int) (15 * getResources().getDisplayMetrics().density));
                                 wrapper.setLayoutParams(layoutParams);
+                                wrapper.setId(exercice.fk_exercice);
                                 wrapper.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
                                 wrapper.setOnClickListener(v -> {
-                                    Log.e("debug", "alo");
+                                    LinearLayout wrapperToDelete = findViewById(exercice.fk_exercice);
+                                    layout.removeView(wrapperToDelete);
                                 });
 
 
@@ -162,7 +164,7 @@ public class EditSessionActivity extends Activity {
 
                                 layout.addView(wrapper);
 
-                                exercices.add(exercice);
+                                session.exercices.add(exercice);
 
                             }
                         } catch (JSONException e) {

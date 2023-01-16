@@ -10,8 +10,8 @@ public class Exercice {
     public int set;
     public int rep;
     public int weight;
-    public String fk_session;
-    public String fk_exercice;
+    public int fk_session;
+    public int fk_exercice;
 
     public Exercice(JSONObject data) throws JSONException {
         this.name = data.getString("name");
@@ -19,8 +19,8 @@ public class Exercice {
         this.set = data.getInt("set");
         this.rep = data.getInt("rep");
         this.weight = data.getInt("weight");
-        this.fk_session = data.getString("fk_session");
-        this.fk_exercice = data.getString("fk_exercice");
+        this.fk_session = data.getInt("fk_session");
+        this.fk_exercice = data.getInt("fk_exercice");
     }
 
 

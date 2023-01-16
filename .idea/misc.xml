@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/drawable/close_icon.xml" value="0.25" />
+        <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/drawable/element_border_selected.xml" value="0.25" />
+        <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/drawable/settings_icon.xml" value="0.25" />
         <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/layout/activity_auth.xml" value="0.264" />
+        <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/layout/activity_edit_session.xml" value="0.13645833333333332" />
         <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/layout/activity_find_gym.xml" value="0.23867753623188406" />
         <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/dev/android/projets/Foresight/app/src/main/res/layout/activity_session.xml" value="0.13645833333333332" />

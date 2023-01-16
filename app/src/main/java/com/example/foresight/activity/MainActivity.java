@@ -148,15 +148,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 );
                                 wrapper.addView(separator);
 
-                                ImageView icon = new ImageView(thisType);
-                                icon.setLayoutParams(
-                                        new LinearLayout.LayoutParams(
-                                                (int) (30 * getResources().getDisplayMetrics().density),
-                                                (int) (30 * getResources().getDisplayMetrics().density)
-                                        )
-                                );
-                                icon.setBackground(ContextCompat.getDrawable(context, R.drawable.edit_icon));
-                                wrapper.addView(icon);
+                                String difficultyString = session.difficulty == 1 ? "Easy" : (session.difficulty == 2 ? "Medium" : "Hard");
+                                TextView difficulty = new TextView(thisType);
+                                difficulty.setText(difficultyString);
+                                difficulty.setTextSize(20);
+                                difficulty.setTextColor(ContextCompat.getColor(context, session.difficulty == 1 ? R.color.green : (session.difficulty == 2 ? R.color.yellow : R.color.red)));
+                                wrapper.addView(difficulty);
 
                                 layout.addView(wrapper);
 
@@ -188,10 +185,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(switchActivityIntent);
     }
 
-    public void goToEditSession(String id, String name) {
+
+    public void goToEditSession(View view) {
         Intent switchActivityIntent = new Intent(this, EditSessionActivity.class);
-        switchActivityIntent.putExtra("sessionId", id);
-        switchActivityIntent.putExtra("sessionName", name);
+        switchActivityIntent.putExtra("session", (Parcelable) selectedSession);
         startActivity(switchActivityIntent);
     }
 
@@ -237,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
 
 
 }
