@@ -1,7 +1,10 @@
 package com.example.foresight.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -15,15 +18,17 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.foresight.api_class.Session;
+import com.example.foresight.fragment.MenuFragment;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.example.foresight.detector.ShakeDetector;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,12 +39,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
+    //Detection du shaking
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
+    //Receiver des appels au service API
     private BroadcastReceiver sendBroadcastReceiver;
 
+    //Session à gerer sur l'activité
     public ArrayList<Session> sessions = new ArrayList<>();
     public Session selectedSession;
 
@@ -49,16 +57,49 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         setContentView(R.layout.activity_main);
 
-        //Sensor shaking
+        //Gestion de la bottom navigation bar
+        MainActivity thisType = this;
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home:
+                                Intent switchActivityIntentz = new Intent(thisType, MainActivity.class);
+                                startActivity(switchActivityIntentz);
+                                break;
+                            case R.id.search:
+                                Intent switchActivityIntent = new Intent(thisType, FindGymActivity.class);
+                                startActivity(switchActivityIntent);
+                                break;
+                            case R.id.settings:
+                                Intent switchActivityIntents = new Intent(thisType, SettingsActivity.class);
+                                startActivity(switchActivityIntents);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+        //Initialisation du listener du shaking
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(count -> {
             Intent switchActivityIntent = new Intent(this, SessionActivity.class);
+            switchActivityIntent.putExtra("session", (Parcelable) selectedSession);
             startActivity(switchActivityIntent);
         });
 
+        //Init du menu top
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
+
+        //Appel au service de gestion d'api pour recuperer les sessions
         Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
         intent.putExtra("apiEndpoint", "rest/v1/sessions?select=*");
         intent.putExtra("requestType", "GET");
@@ -68,9 +109,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         filter.addAction("ACTION_API_RESPONSE");
         filter.addCategory(Intent.CATEGORY_DEFAULT);
 
-        MainActivity thisType = this;
-
-        //Recuperation du code retour de la requete
         sendBroadcastReceiver = new BroadcastReceiver() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -96,14 +134,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         try {
                             JSONArray sessionList = new JSONArray (response);
 
+                            //Element contenant les sessions sur le layout
                             LinearLayout layout = findViewById(R.id.layoutSession);
-
                             for (int i=0; i < sessionList.length(); i++) {
 
+                                //recuperation d'une session
                                 JSONObject sessionObject = sessionList.getJSONObject(i);
                                 Session session = new Session(sessionObject);
                                 selectedSession = session;
 
+                                //Création de la boite l'enveloppant
                                 LinearLayout wrapper = new LinearLayout(thisType);
                                 wrapper.setPadding((int) (15 * getResources().getDisplayMetrics().density),
                                         (int) (7 * getResources().getDisplayMetrics().density),
@@ -128,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                             selected.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
                                         }
                                     }
-                                    //goToEditSession(String.valueOf(session.fk_session), session.name);
                                 });
                                 wrapper.setId(session.fk_session);
 
@@ -175,39 +214,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    //Switch avec l'activité de session (boutton ou shaking)
     public void goToSessionActivity(View view) {
         Intent switchActivityIntent = new Intent(this, SessionActivity.class);
         switchActivityIntent.putExtra("session", (Parcelable) selectedSession);
         startActivity(switchActivityIntent);
     }
+
+    //Switch avec l'activité de setting
     public void goToSettingsActivity(View view) {
         Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
         startActivity(switchActivityIntent);
     }
 
-
+    //Switch vers l'activité d'edit de session
     public void goToEditSession(View view) {
         Intent switchActivityIntent = new Intent(this, EditSessionActivity.class);
         switchActivityIntent.putExtra("session", (Parcelable) selectedSession);
         startActivity(switchActivityIntent);
     }
 
+    //Switch avec l'activité pour trouver les salles de sports
     public void goToFindGym(View view) {
         Intent switchActivityIntent = new Intent(this, FindGymActivity.class);
         startActivity(switchActivityIntent);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
         mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
         mSensorManager.unregisterListener(mShakeDetector);
         if(sendBroadcastReceiver != null){
             unregisterReceiver(sendBroadcastReceiver);
@@ -226,14 +266,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-
-    }
+    public void onSensorChanged(SensorEvent sensorEvent) {}
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int i) {}
 
 
 

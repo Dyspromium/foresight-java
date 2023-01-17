@@ -35,6 +35,7 @@
         android:textColor="@color/gray"
         android:background="@drawable/input_border"
         android:padding="10dp"
+        android:fontFamily="sans-serif"
         android:autofillHints="" />
     <Button android:id="@+id/button"
         android:background="@drawable/button_bg"

@@ -37,6 +37,7 @@
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:hint="@string/enter_password"
+            android:fontFamily="sans-serif"
             android:inputType="textPassword"
             android:textColorHint="@color/black"
             android:textColor="@color/gray"

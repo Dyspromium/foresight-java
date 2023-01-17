@@ -29,6 +29,7 @@
             android:background="@drawable/input_border"
             android:textColor="@color/gray"
             android:textColorHint="@color/black"
+            android:fontFamily="sans-serif"
             android:padding="10dp"
             android:autofillHints="" />
         <EditText
@@ -40,6 +41,7 @@
             android:inputType="textPassword"
             android:textColorHint="@color/black"
             android:textColor="@color/gray"
+            android:fontFamily="sans-serif"
             android:background="@drawable/input_border"
             android:padding="10dp"
             android:autofillHints="" />

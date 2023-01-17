@@ -16,13 +16,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.foresight.R;
 import com.example.foresight.database.ProfileDatabase;
+import com.example.foresight.fragment.MenuFragment;
 
 import java.io.ByteArrayOutputStream;
 
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
 
     int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -34,13 +39,15 @@ public class SettingsActivity extends Activity {
 
     int profile_id = 1;
 
-    SQLiteDatabase db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
 
         mEditName = (EditText)findViewById(R.id.editTextName);
         mEditAge = (EditText)findViewById(R.id.editTextAge);
@@ -81,6 +88,7 @@ public class SettingsActivity extends Activity {
 
         //Redirection vers page auth
         startActivity(new Intent(SettingsActivity.this, SignInActivity.class));
+        finish();
 
     }
 
@@ -108,6 +116,7 @@ public class SettingsActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -123,10 +132,14 @@ public class SettingsActivity extends Activity {
             SQLiteDatabase db = profile.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put("image_data", bitmapData);
-            String selection = "id="+profile_id;
+            String selection = "id=" + profile_id;
             String[] selectionArgs = {};
             db.update("profile", values, selection, selectionArgs);
         }
     }
 
+    public void goToSettingsActivity(View view) {
+        Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
+        startActivity(switchActivityIntent);
+    }
 }

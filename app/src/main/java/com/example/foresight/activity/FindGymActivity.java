@@ -12,16 +12,19 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +45,34 @@ public class FindGymActivity extends Activity {
 
         setContentView(R.layout.activity_find_gym);
 
+        FindGymActivity thisType = this;
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.search);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home:
+                                Intent switchActivityIntentz = new Intent(thisType, MainActivity.class);
+                                startActivity(switchActivityIntentz);
+                                break;
+                            case R.id.search:
+                                Intent switchActivityIntent = new Intent(thisType, FindGymActivity.class);
+                                startActivity(switchActivityIntent);
+                                break;
+                            case R.id.settings:
+                                Intent switchActivityIntents = new Intent(thisType, SettingsActivity.class);
+                                startActivity(switchActivityIntents);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+
         Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
         intent.putExtra("apiEndpoint", "rest/v1/gym?select=*");
         intent.putExtra("requestType", "GET");
@@ -50,8 +81,6 @@ public class FindGymActivity extends Activity {
         IntentFilter filter = new IntentFilter();
         filter.addAction("ACTION_API_RESPONSE");
         filter.addCategory(Intent.CATEGORY_DEFAULT);
-
-        FindGymActivity thisType = this;
 
         //Recuperation du code retour de la requete
         sendBroadcastReceiver = new BroadcastReceiver() {

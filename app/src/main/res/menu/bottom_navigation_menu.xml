@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/person"
-        android:title="Person"
-        />
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <item
         android:id="@+id/home"
-        android:title="Home"
-        />
+        android:icon="@drawable/default_profile"
+        android:title="Home" />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/edit_icon"
+        android:title="Search" />
     <item
         android:id="@+id/settings"
-        android:title="Settings"
-        />
+        android:icon="@drawable/settings_icon"
+        android:title="Settings" />
 </menu>

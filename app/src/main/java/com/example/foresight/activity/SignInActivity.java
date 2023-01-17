@@ -14,7 +14,6 @@ import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,23 +29,26 @@ public class SignInActivity extends Activity {
     EditText mEditMail;
     EditText mEditPass;
 
-    private BroadcastReceiver sendBroadcastReceiver;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         //Verification qu'un utilisateur est deja connecté
         SharedPreferences pref = getSharedPreferences("SessionPref", 0);
         String sessionId = pref.getString("sessionId", null);
+
+        //Si déjà connecté -> on va directement sur la page d'accueil
         if(sessionId != null){
             startActivity(new Intent(SignInActivity.this, MainActivity.class));
         }
 
+        //Récuperation de la configuration actuel du téléphone pour determiner son format (paysage/portrait)
         Configuration configuration = getResources().getConfiguration();
         int orientation = configuration.orientation;
 
+        //Si portrait on met le layout portrait sinon landscape
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_sign_in_landscape);
         } else{
@@ -56,18 +58,14 @@ public class SignInActivity extends Activity {
         //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextEmailAddress);
         mEditPass = (EditText)findViewById(R.id.editTextPassword);
-
     }
 
-
+    //Trigger si le format du téléphone change (portrait/paysage)
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        Log.e("debug", "config update");
-        Log.e("debug", String.valueOf(newConfig.orientation));
-
-        // Checks the orientation of the screen
+        //Attribue un layout en fonction de l'orientation
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_sign_in_landscape);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
@@ -75,6 +73,7 @@ public class SignInActivity extends Activity {
         }
     }
 
+    //Methode pour tenter de se connecter
     public void signIn(View view) {
 
         //Vérification que les inputs sont bien remplis
@@ -92,7 +91,8 @@ public class SignInActivity extends Activity {
             filter.addAction("ACTION_API_RESPONSE");
             filter.addCategory(Intent.CATEGORY_DEFAULT);
 
-            sendBroadcastReceiver = new BroadcastReceiver() {
+            //Redirection vers page principal
+            BroadcastReceiver sendBroadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
@@ -101,12 +101,12 @@ public class SignInActivity extends Activity {
 
                     switch (code) {
                         case "500":
-                            Snackbar.make(view, "Error contacting server", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(view, "Error contacting server, verify your internet", Snackbar.LENGTH_SHORT).show();
                             break;
                         case "400":
+                            //Recuperation de l'erreur 400
                             String error = intent.getStringExtra("response");
                             try {
-                                Log.e("debug", error);
                                 JSONObject jsonObject = new JSONObject(error);
                                 Snackbar.make(view, jsonObject.getString("msg"), Snackbar.LENGTH_SHORT).show();
                             } catch (JSONException e) {
@@ -114,22 +114,23 @@ public class SignInActivity extends Activity {
                             }
                             break;
                         default:
+                            //Recuperation de la réponse
                             String response = intent.getStringExtra("response");
-
-                            Log.e("debug", response);
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
 
+                                //Ajout aux données en cache de la session
                                 SharedPreferences pref = getSharedPreferences("SessionPref", 0);
-
                                 String sessionId = pref.getString("sessionId", null);
                                 if (sessionId == null) {
                                     SharedPreferences.Editor editor = pref.edit();
                                     editor.putString("sessionId", jsonObject.getJSONObject("user").getString("id"));
                                     editor.apply();
                                 }
+
                                 //Redirection vers page principal
                                 startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                                finish();
 
                             } catch (JSONException e) {
                                 Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
@@ -144,16 +145,10 @@ public class SignInActivity extends Activity {
         }
     }
 
+    //Redirige vers l'activité d'inscription
     public void goToSignUpActivity(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-    }
-
-
 }

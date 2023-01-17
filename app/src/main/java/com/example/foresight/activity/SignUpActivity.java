@@ -27,8 +27,6 @@ public class SignUpActivity extends Activity {
     EditText mEditMail;
     EditText mEditPass;
 
-    private BroadcastReceiver sendBroadcastReceiver;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +39,11 @@ public class SignUpActivity extends Activity {
             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
         }
 
+        //Récuperation de la configuration actuel du téléphone pour determiner son format (paysage/portrait)
         Configuration configuration = getResources().getConfiguration();
         int orientation = configuration.orientation;
 
+        //Si portrait on met le layout portrait sinon landscape
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_sign_up_landscape);
         } else{
@@ -53,7 +53,6 @@ public class SignUpActivity extends Activity {
         //Link de la variable avec l'element input du layout
         mEditMail = (EditText)findViewById(R.id.editTextEmailAddress);
         mEditPass = (EditText)findViewById(R.id.editTextPassword);
-
     }
 
     @Override
@@ -68,6 +67,7 @@ public class SignUpActivity extends Activity {
         }
     }
 
+    //Methode pour tenter de s'inscrire
     public void signUp(View view) {
 
         //Vérification que les inputs sont bien remplis
@@ -85,7 +85,8 @@ public class SignUpActivity extends Activity {
             filter.addAction("ACTION_API_RESPONSE");
             filter.addCategory(Intent.CATEGORY_DEFAULT);
 
-            sendBroadcastReceiver = new BroadcastReceiver() {
+            //Recuperation du code retour de la requete
+            BroadcastReceiver sendBroadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
@@ -97,6 +98,7 @@ public class SignUpActivity extends Activity {
                             Snackbar.make(view, "Error contacting server", Snackbar.LENGTH_SHORT).show();
                             break;
                         case "400":
+                            //Recuperation de l'erreur 400
                             String error = intent.getStringExtra("response");
                             try {
                                 JSONObject jsonObject = new JSONObject(error);
@@ -106,18 +108,16 @@ public class SignUpActivity extends Activity {
                             }
                             break;
                         default:
+                            //Recuperation de la réponse
                             String response = intent.getStringExtra("response");
-                            Log.e("resp", response);
-
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 JSONObject userObject = new JSONObject(jsonObject.getString("user"));
+
+                                //Ajout aux données en cache de la session
                                 SharedPreferences pref = getSharedPreferences("SessionPref", 0);
-
                                 String sessionId = pref.getString("sessionId", "");
-
                                 if (sessionId.equals("")) {
-
                                     SharedPreferences.Editor editor = pref.edit();
                                     editor.putString("sessionId", userObject.getString("id"));
                                     editor.apply();
@@ -125,8 +125,7 @@ public class SignUpActivity extends Activity {
 
                                 //Redirection vers page principal
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-
-
+                                finish();
 
                             } catch (JSONException e) {
                                 Snackbar.make(view, e.toString(), Snackbar.LENGTH_SHORT).show();
@@ -141,14 +140,8 @@ public class SignUpActivity extends Activity {
         }
     }
 
+    //Redirige vers l'activité de connection
     public void goToSignInActivity(View view) {
-        Intent intent = new Intent(this, SignInActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
+        finish();
     }
 }
