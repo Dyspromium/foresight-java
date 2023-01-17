@@ -9,7 +9,7 @@
     <item
         android:id="@+id/search"
         android:icon="@drawable/edit_icon"
-        android:title="Search" />
+        android:title="Search Gym" />
     <item
         android:id="@+id/settings"
         android:icon="@drawable/settings_icon"

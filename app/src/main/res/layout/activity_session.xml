@@ -13,13 +13,11 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:padding="15dp">
-
         <ImageView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:contentDescription="@string/foresight_logo"
             android:src="@drawable/logo_small" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,7 +33,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
         <ImageView
             android:layout_width="35dp"
             android:layout_height="match_parent"
@@ -43,7 +40,6 @@
             android:contentDescription="@string/settings_icon"
             android:src="@drawable/settings_icon" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/layoutGym"
         android:layout_width="match_parent"

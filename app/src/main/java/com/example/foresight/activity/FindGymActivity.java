@@ -18,10 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.foresight.fragment.MenuFragment;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,10 +36,12 @@ import org.json.JSONObject;
 
 
 
-public class FindGymActivity extends Activity {
+public class FindGymActivity extends AppCompatActivity {
 
+    //Gestion de la permission d'acces à la géolocalisation
     int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 
+    //Receiver des appels au service API
     private BroadcastReceiver sendBroadcastReceiver;
 
     @SuppressLint("MissingInflatedId")
@@ -45,8 +51,8 @@ public class FindGymActivity extends Activity {
 
         setContentView(R.layout.activity_find_gym);
 
+        //Gestion de la bottom navigation bar
         FindGymActivity thisType = this;
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.search);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -72,7 +78,12 @@ public class FindGymActivity extends Activity {
                     }
                 });
 
+        //Init du menu top
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
 
+        //Appel au service de gestion d'api pour recuperer les sessions
         Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
         intent.putExtra("apiEndpoint", "rest/v1/gym?select=*");
         intent.putExtra("requestType", "GET");
@@ -82,7 +93,6 @@ public class FindGymActivity extends Activity {
         filter.addAction("ACTION_API_RESPONSE");
         filter.addCategory(Intent.CATEGORY_DEFAULT);
 
-        //Recuperation du code retour de la requete
         sendBroadcastReceiver = new BroadcastReceiver() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -108,6 +118,7 @@ public class FindGymActivity extends Activity {
                         try {
                             JSONArray gymList = new JSONArray (response);
 
+                            //Vérification des permissions
                             if (ContextCompat.checkSelfPermission(thisType,
                                     Manifest.permission.ACCESS_FINE_LOCATION)
                                     != PackageManager.PERMISSION_GRANTED) {
@@ -118,16 +129,13 @@ public class FindGymActivity extends Activity {
                                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
                             }
 
-                            // Obtenez un référence au LocationManager
+                            //Recuperation de latitude longitude
                             LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-
-                            // Obtenez la dernière position connue
                             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                            // Obtenez les informations de localisation à partir de la position
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
+                            //Récupération du container du layout
                             LinearLayout layout = (LinearLayout) findViewById(R.id.layoutGym);
 
                             for (int i=0; i < gymList.length(); i++) {
@@ -137,7 +145,19 @@ public class FindGymActivity extends Activity {
 
                                 double calculeDistance = calculeDistance(latitude, longitude, gymLatitude, gymLongitude);
 
+                                //Création de la boite l'enveloppant
                                 LinearLayout wrapper = new LinearLayout(thisType);
+                                wrapper.setPadding((int) (15 * getResources().getDisplayMetrics().density),
+                                        (int) (7 * getResources().getDisplayMetrics().density),
+                                        (int) (15 * getResources().getDisplayMetrics().density),
+                                        (int) (7 * getResources().getDisplayMetrics().density));
+                                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                );
+                                layoutParams.setMargins(0, 0, 0, (int) (15 * getResources().getDisplayMetrics().density));
+                                wrapper.setLayoutParams(layoutParams);
+                                wrapper.setBackground(ContextCompat.getDrawable(context, R.drawable.element_border));
 
                                 TextView name = new TextView(thisType);
                                 name.setText(gym.getString("name"));
@@ -182,9 +202,9 @@ public class FindGymActivity extends Activity {
         double c = 2 * Math.asin(Math.sqrt(a));
         return round(6371 * c,2);
     }
+    //Arrondi un chiffre du nombre de place apres la virgule
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
