@@ -1,21 +1,22 @@
 package com.example.foresight.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +24,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.foresight.R;
 import com.example.foresight.database.ProfileDatabase;
 import com.example.foresight.fragment.MenuFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,11 +42,54 @@ public class SettingsActivity extends AppCompatActivity {
 
     int profile_id = 1;
 
+    View tmpView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_settings);
+        //Récuperation de la configuration actuel du téléphone pour determiner son format (paysage/portrait)
+        Configuration configuration = getResources().getConfiguration();
+        int orientation = configuration.orientation;
+
+        //Si portrait on met le layout portrait sinon landscape
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_settings_landscape);
+        } else{
+            setContentView(R.layout.activity_settings_portrait);
+        }
+
+
+        //Gestion de la bottom navigation bar
+        SettingsActivity thisType = this;
+
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.settings);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home:
+                                Intent switchActivityIntentz = new Intent(thisType, MainActivity.class);
+                                startActivity(switchActivityIntentz);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                            case R.id.search:
+                                Intent switchActivityIntent = new Intent(thisType, FindGymActivity.class);
+                                startActivity(switchActivityIntent);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                            case R.id.settings:
+                                Intent switchActivityIntents = new Intent(thisType, SettingsActivity.class);
+                                startActivity(switchActivityIntents);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                        }
+                        return true;
+                    }
+                });
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -67,9 +113,10 @@ public class SettingsActivity extends AppCompatActivity {
             @SuppressLint("Range") int weight = cursor.getInt(cursor.getColumnIndex("weight"));
             @SuppressLint("Range") byte[] imageData = cursor.getBlob(cursor.getColumnIndex("image_data"));
             Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-            profilePicture.setImageBitmap(imageBitmap);
+            if(imageBitmap != null){
+                profilePicture.setImageBitmap(imageBitmap);
+            }
 
-            Log.e("debug", name);
             mEditName.setText(name);
             mEditAge.setText( String.valueOf(age));
             mEditSize.setText( String.valueOf(size));
@@ -78,6 +125,20 @@ public class SettingsActivity extends AppCompatActivity {
         cursor.close();
         db.close();
     }
+
+    //Trigger si le format du téléphone change (portrait/paysage)
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        //Attribue un layout en fonction de l'orientation
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_settings_landscape);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_settings_portrait);
+        }
+    }
+
     public void signOut(View view) {
 
         //Clear des sharedPreferences
@@ -93,6 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void openCamera(View view){
+        tmpView = view;
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -112,7 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
         String[] selectionArgs = {};
         db.update("profile", values, selection, selectionArgs);
         db.close();
-        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        Snackbar.make(view, "Profile has been updated", Snackbar.LENGTH_SHORT).show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -135,11 +197,16 @@ public class SettingsActivity extends AppCompatActivity {
             String selection = "id=" + profile_id;
             String[] selectionArgs = {};
             db.update("profile", values, selection, selectionArgs);
+            Snackbar.make(tmpView, "Profile Picture has been updated", Snackbar.LENGTH_SHORT).show();
+
         }
     }
 
-    public void goToSettingsActivity(View view) {
-        Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
-        startActivity(switchActivityIntent);
+    //Animation sur le button back
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.hold);
     }
 }

@@ -64,14 +64,17 @@ public class FindGymActivity extends AppCompatActivity {
                             case R.id.home:
                                 Intent switchActivityIntentz = new Intent(thisType, MainActivity.class);
                                 startActivity(switchActivityIntentz);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
                                 break;
                             case R.id.search:
                                 Intent switchActivityIntent = new Intent(thisType, FindGymActivity.class);
                                 startActivity(switchActivityIntent);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
                                 break;
                             case R.id.settings:
                                 Intent switchActivityIntents = new Intent(thisType, SettingsActivity.class);
                                 startActivity(switchActivityIntents);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
                                 break;
                         }
                         return true;
@@ -224,5 +227,13 @@ public class FindGymActivity extends AppCompatActivity {
     protected void onStop()
     {
         super.onStop();
+    }
+
+    //Animation sur le button back
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.hold);
     }
 }

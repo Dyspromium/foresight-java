@@ -18,11 +18,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foresight.R;
 import com.example.foresight.api_class.Exercice;
 import com.example.foresight.api_class.Session;
 import com.example.foresight.detector.MyGestureListener;
+import com.example.foresight.fragment.MenuFragment;
 import com.example.foresight.service.ApiCallIntentService;
 
 import org.json.JSONArray;
@@ -46,6 +49,10 @@ public class SessionActivity extends AppCompatActivity {
         session = getIntent().getParcelableExtra("session");
 
         setContentView(R.layout.activity_session);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView title = findViewById(R.id.sessionTitle);
         title.setText("Session " + session.name);
@@ -117,7 +124,7 @@ public class SessionActivity extends AppCompatActivity {
         exerciceContainer.removeAllViews();
 
         TextView exerciceName = new TextView(this);
-        exerciceName.setText((state+1) +" : " +session.exercices.get(state).name);
+        exerciceName.setText((state+1) +" - " +session.exercices.get(state).name);
         exerciceName.setTextSize(25);
         exerciceName.setTextColor(ContextCompat.getColor(this, R.color.gray));
         exerciceContainer.addView(exerciceName);
@@ -130,7 +137,7 @@ public class SessionActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.setMargins(0, 0, 0, (int) (15 * getResources().getDisplayMetrics().density));
+        layoutParams.setMargins(0, (int) (10 * getResources().getDisplayMetrics().density), 0, (int) (15 * getResources().getDisplayMetrics().density));
         exerciceDesc.setLayoutParams(layoutParams);
         exerciceContainer.addView(exerciceDesc);
 
@@ -165,5 +172,15 @@ public class SessionActivity extends AppCompatActivity {
     private void goToMainActivity() {
         Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
+        overridePendingTransition(R.anim.hold, R.anim.hold);
+
+    }
+
+    //Animation sur le button back
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.hold);
     }
 }
