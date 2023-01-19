@@ -2,11 +2,14 @@ package com.example.foresight.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.foresight.api_class.Session;
 import com.example.foresight.fragment.MenuFragment;
+import com.example.foresight.notification.NotificationApp;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
 import com.example.foresight.detector.ShakeDetector;
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //Session à gerer sur l'activité
     public ArrayList<Session> sessions = new ArrayList<>();
     public Session selectedSession;
+
+    //Gestion des notifications
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
+
+        //Initialization Notifications
+        this.notificationManagerCompat = NotificationManagerCompat.from(this);
+        sendNotif();
 
         //Appel au service de gestion d'api pour recuperer les sessions
         Intent intent = new Intent(getApplicationContext(), ApiCallIntentService.class);
@@ -241,6 +252,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void goToFindGym(View view) {
         Intent switchActivityIntent = new Intent(this, FindGymActivity.class);
         startActivity(switchActivityIntent);
+    }
+
+    //Envoie une notification
+    public void sendNotif() {
+        String title = "C'est l'heure de la scéance !";
+        String message = "Dépense de l'énergie !";
+
+        Notification notification = new NotificationCompat.Builder(this, NotificationApp.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.logo_small)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        int notificationId = 1;
+        this.notificationManagerCompat.notify(notificationId, notification);
     }
 
     @Override

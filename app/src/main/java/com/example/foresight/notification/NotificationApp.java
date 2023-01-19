@@ -1,11 +1,11 @@
 package com.example.foresight.notification;
 
-
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+//Class d'envoie de notification
 public class NotificationApp extends Application  {
 
     public static final  String CHANNEL_1_ID = "channel1";
@@ -14,7 +14,6 @@ public class NotificationApp extends Application  {
     @Override
     public void onCreate() {
         super.onCreate();
-
         this.createNotificationChannels();
     }
 
@@ -33,7 +32,6 @@ public class NotificationApp extends Application  {
                     NotificationManager.IMPORTANCE_LOW
             );
             channel1.setDescription("This is channel 2");
-
 
             NotificationManager manager = this.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
