@@ -52,12 +52,8 @@ public class SettingsActivity extends AppCompatActivity {
         Configuration configuration = getResources().getConfiguration();
         int orientation = configuration.orientation;
 
-        //Si portrait on met le layout portrait sinon landscape
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_settings_landscape);
-        } else{
-            setContentView(R.layout.activity_settings_portrait);
-        }
+
+        setContentView(R.layout.activity_settings);
 
 
         //Gestion de la bottom navigation bar
@@ -126,19 +122,6 @@ public class SettingsActivity extends AppCompatActivity {
         db.close();
     }
 
-    //Trigger si le format du téléphone change (portrait/paysage)
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        //Attribue un layout en fonction de l'orientation
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_settings_landscape);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(R.layout.activity_settings_portrait);
-        }
-    }
-
     public void signOut(View view) {
 
         //Clear des sharedPreferences
@@ -200,6 +183,12 @@ public class SettingsActivity extends AppCompatActivity {
             Snackbar.make(tmpView, "Profile Picture has been updated", Snackbar.LENGTH_SHORT).show();
 
         }
+    }
+
+    //Switch avec l'activité de setting
+    public void goToSettingsActivity(View view) {
+        Intent switchActivityIntent = new Intent(this, SettingsActivity.class);
+        startActivity(switchActivityIntent);
     }
 
     //Animation sur le button back

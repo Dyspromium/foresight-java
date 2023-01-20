@@ -8,17 +8,24 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foresight.api_class.Exercice;
 import com.example.foresight.api_class.Session;
+import com.example.foresight.fragment.MenuFragment;
 import com.example.foresight.service.ApiCallIntentService;
 import com.example.foresight.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +34,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 
-public class EditSessionActivity extends Activity {
-
+public class EditSessionActivity extends AppCompatActivity {
 
     private BroadcastReceiver joinBroadcastReceiver;
     private BroadcastReceiver exerciceBroadcastReceiver;
@@ -41,6 +47,42 @@ public class EditSessionActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_edit_session);
+
+        //Init du menu top
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_menu, new MenuFragment());
+
+        //Gestion de la bottom navigation bar
+        EditSessionActivity thisType = this;
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.home:
+                                Intent switchActivityIntentz = new Intent(thisType, MainActivity.class);
+                                startActivity(switchActivityIntentz);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                            case R.id.search:
+                                Intent switchActivityIntent = new Intent(thisType, FindGymActivity.class);
+                                startActivity(switchActivityIntent);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                            case R.id.settings:
+                                Intent switchActivityIntents = new Intent(thisType, SettingsActivity.class);
+                                startActivity(switchActivityIntents);
+                                overridePendingTransition(R.anim.hold, R.anim.fade_out);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
 
         session = getIntent().getParcelableExtra("session");
 

@@ -22,4 +22,10 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="take_a_picture">Take a picture</string>
     <string name="edit">Edit</string>
+    <string name="finish">Finish</string>
+    <string name="your_sessions">Your Sessions</string>
+    <string name="nearest_gym">Nearest Gym</string>
+    <string name="home">Home</string>
+    <string name="search_gym">Search Gym</string>
+    <string name="settings">Settings</string>
 </resources>

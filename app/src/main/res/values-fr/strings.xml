@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Foresight</string>
+    <string name="sign_in">Se connecter</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="foresight_logo">Foresight Logo</string>
+    <string name="enter_email">Entrez une adresse mail</string>
+    <string name="enter_password">Entrez un mot de passe</string>
+    <string name="no_account">Pas de compte ?</string>
+    <string name="already_have_an_account">J\'ai déjà un compte</string>
+    <string name="find_nearest_gym">Trouvez la salle la plus proche</string>
+    <string name="settings_icon">Icon de paramètre</string>
+    <string name="start_session">Lancer session</string>
+    <string name="save">Sauvegarder</string>
+    <string name="sign_out">Se déconnecter</string>
+    <string name="name">Nom</string>
+    <string name="age">Age</string>
+    <string name="next">Suivant</string>
+    <string name="edit_session">Editer session</string>
+    <string name="session_name">Nom de l\'entrainement</string>
+    <string name="size">Taille</string>
+    <string name="weight">Poid</string>
+    <string name="profile_picture">Photo de profile</string>
+    <string name="take_a_picture">Prendre une photo</string>
+    <string name="edit">Modifier</string>
+    <string name="finish">Terminer</string>
+    <string name="your_sessions">Vos sessions</string>
+    <string name="nearest_gym">Salles les plus proches</string>
+    <string name="home">Accueil</string>
+    <string name="search_gym">Trouver Salle</string>
+    <string name="settings">Paramètres</string>
+</resources>

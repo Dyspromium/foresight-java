@@ -7,24 +7,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foresight.R;
 import com.example.foresight.api_class.Exercice;
 import com.example.foresight.api_class.Session;
-import com.example.foresight.detector.MyGestureListener;
+import com.example.foresight.detector.OnSwipeTouchListener;
 import com.example.foresight.fragment.MenuFragment;
 import com.example.foresight.service.ApiCallIntentService;
 
@@ -117,9 +113,19 @@ public class SessionActivity extends AppCompatActivity {
         registerReceiver(sendBroadcastReceiver, filter);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void updateScreen(){
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) LinearLayout exerciceContainer = findViewById(R.id.exerciceState);
+
+
+        exerciceContainer.setOnTouchListener(new OnSwipeTouchListener(SessionActivity.this) {
+            public void onSwipeRight() {
+                removeSessionState();
+            }
+            public void onSwipeLeft() {
+                addSessionState();
+            }
+        });
 
         exerciceContainer.removeAllViews();
 
@@ -152,19 +158,43 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateSessionState(View view) {
+    public void addSessionState() {
         state++;
         Log.e("debug", String.valueOf(state));
         Log.e("debug", String.valueOf(session.exercices.size()));
-        if(state == session.exercices.size()-1){
+        if(state == session.exercices.size()){
+            Intent switchActivityIntent = new Intent(this, MainActivity.class);
+            startActivity(switchActivityIntent);
+            overridePendingTransition(R.anim.hold, R.anim.hold);
+        } else if(state == session.exercices.size()-1){
             Button buttonState = findViewById(R.id.buttonState);
-            buttonState.setText("Finish");
+            buttonState.setText(getResources().getString(R.string.finish));
             buttonState.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     goToMainActivity();
                 }
             });
+            updateScreen();
+        }else{
+            updateScreen();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void removeSessionState() {
+        if(state == session.exercices.size()-1){
+            Button buttonState = findViewById(R.id.buttonState);
+            buttonState.setText(getResources().getString(R.string.next));
+            buttonState.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateSessionState(v);
+                }
+            });
+        }
+        if(state >0) {
+            state--;
         }
         updateScreen();
     }
@@ -182,5 +212,20 @@ public class SessionActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.hold, R.anim.hold);
+    }
+
+    public void updateSessionState(View view) {
+        state++;
+        if(state == session.exercices.size()-1){
+            Button buttonState = findViewById(R.id.buttonState);
+            buttonState.setText(getResources().getString(R.string.finish));
+            buttonState.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToMainActivity();
+                }
+            });
+        }
+        updateScreen();
     }
 }
